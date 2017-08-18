@@ -1,0 +1,18 @@
+- name: "Create a VM in {{ random_hosts }} node"
+  hosts: "{{ random_hosts }}"
+  gather_facts: true
+  vars:
+    stack_template_path: stack_provision_vm.j2.yml
+    stack_name: ovs_flows
+    stack_vm_flavor: m1.small
+    stack_vm_image: CirrOS
+    stack_vm_net: vlan-network
+  tasks:
+    - include_role:
+        name: provision/os_auth
+        tasks_from: create_auth
+
+    - include_role:
+        name: provision/os_stack
+        tasks_from: create_stack 
+
